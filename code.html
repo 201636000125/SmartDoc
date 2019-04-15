@@ -1,34 +1,68 @@
-# -*- coding: utf-8 -*-
 
-"""
-
-Name :SmartDoc
-@author: 201636000125
-
-"""
-
-
-#读取SRS.txt文件
-file_srsTxt=open("SRS.txt", "r");
-file_srsTxt_message=file_srsTxt.read()
-file_srsTxt.close()
-
-#生成SRS.html文件
-file_srsHtml=open("SRS.html","w")
-file_srsHtml.write(file_srsTxt_message)
-print(file_srsTxt_message)
-file_srsHtml.close()
-
-#读取Scode.py文件
-file_codePy=open("code.py", "r",encoding="utf-8")
-file_codePy_message=file_codePy.read()
-file_codePy.close()
-
-#生成code.html文件
-file_codeHtml=open("code.html","w")
-file_codeHtml.write(file_codePy_message)
-print(file_codePy_message)
-file_srsHtml.close()
-
-Html.close()
-
+<html>
+<head>code</head>
+<body>
+<p># Copyright (C) 2019 Hui Lan
+</p><p>{see rq1}
+</p><p>def file2lst(fname):
+</p><p>    ''' Return a list where each element is a word from fname. '''
+</p><p>    L = []
+</p><p>	{see ra1_open}
+</p><p>    f = open(fname)
+</p><p>    for line in f:
+</p><p>		{see ra1_strip}
+</p><p>        line = line.strip()
+</p><p>		{see ra1_split}
+</p><p>        lst = line.split()
+</p><p>        for x in lst:
+</p><p>			{see ra1_append}
+</p><p>            L.append(x)
+</p><p>	{see ra1_close}
+</p><p>    f.close()
+</p><p>    return L
+</p><p>
+</p><p>{see rq2}
+</p><p>def lst2dict(lst):
+</p><p>    ''' Return a dictionary given list lst.  Each key is an element in the lst.
+</p><p>    The value is always 1.'''
+</p><p>	{see ra2_dictionary}
+</p><p>    d = {}
+</p><p>    for w in lst:
+</p><p>        d[w] = 1 
+</p><p>    return d
+</p><p>
+</p><p>
+</p><p>{see rq3}
+</p><p>def word_frequency(fname, english_dictionary):
+</p><p>    ''' Return a dictionary where each key is a word both in the file fname and in 
+</p><p>    the dictionary english_dictionary, and the corresponding value is the frequency
+</p><p>    of that word.'''
+</p><p>    d = {}
+</p><p>    L = file2lst(fname)
+</p><p>    for x in L:
+</p><p>		{see ra3_lower}
+</p><p>        x = x.lower()
+</p><p>        if x in english_dictionary:
+</p><p>            if not x in d:
+</p><p>                d[x] = 1
+</p><p>            else:
+</p><p>                d[x] += 1
+</p><p>    return d
+</p><p>
+</p><p>{see rq4}
+</p><p>def sort_by_value(d):
+</p><p>    ''' Return a sorted list of tuples, each tuple containing a key and a value.
+</p><p>        Note that the tuples are order in descending order of the value.'''
+</p><p>    import operator
+</p><p>	{see ra4_sort}
+</p><p>    lst = sorted(d.items(), key=operator.itemgetter(1), reverse=True)    
+</p><p>    return lst
+</p><p>
+</p><p>{see rq5}
+</p><p>if __name__ == '__main__':
+</p><p>	{see ra5_main}	
+</p><p>    ed = lst2dict(file2lst('words.txt')) # from http://greenteapress.com/thinkpython2/code/words.txt
+</p><p>    d = word_frequency('brexit-news.txt', ed)
+</p><p>    print(sort_by_value(d))</p>
+</body>
+</html>

@@ -1,32 +1,62 @@
-# -*- coding: utf-8 -*-
+# Copyright (C) 2019 Hui Lan
+{see rq1}
+def file2lst(fname):
+    ''' Return a list where each element is a word from fname. '''
+    L = []
+	{see ra1_open}
+    f = open(fname)
+    for line in f:
+		{see ra1_strip}
+        line = line.strip()
+		{see ra1_split}
+        lst = line.split()
+        for x in lst:
+			{see ra1_append}
+            L.append(x)
+	{see ra1_close}
+    f.close()
+    return L
 
-"""
+{see rq2}
+def lst2dict(lst):
+    ''' Return a dictionary given list lst.  Each key is an element in the lst.
+    The value is always 1.'''
+	{see ra2_dictionary}
+    d = {}
+    for w in lst:
+        d[w] = 1 
+    return d
 
-Name :SmartDoc
-@author: 201636000125
 
-"""
+{see rq3}
+def word_frequency(fname, english_dictionary):
+    ''' Return a dictionary where each key is a word both in the file fname and in 
+    the dictionary english_dictionary, and the corresponding value is the frequency
+    of that word.'''
+    d = {}
+    L = file2lst(fname)
+    for x in L:
+		{see ra3_lower}
+        x = x.lower()
+        if x in english_dictionary:
+            if not x in d:
+                d[x] = 1
+            else:
+                d[x] += 1
+    return d
 
+{see rq4}
+def sort_by_value(d):
+    ''' Return a sorted list of tuples, each tuple containing a key and a value.
+        Note that the tuples are order in descending order of the value.'''
+    import operator
+	{see ra4_sort}
+    lst = sorted(d.items(), key=operator.itemgetter(1), reverse=True)    
+    return lst
 
-#读取SRS.txt文件
-file_srsTxt=open("SRS.txt", "r");
-file_srsTxt_message=file_srsTxt.read()
-file_srsTxt.close()
-
-#生成SRS.html文件
-file_srsHtml=open("SRS.html","w")
-file_srsHtml.write(file_srsTxt_message)
-print(file_srsTxt_message)
-file_srsHtml.close()
-
-#读取Scode.py文件
-file_codePy=open("code.py", "r",encoding="utf-8")
-file_codePy_message=file_codePy.read()
-file_codePy.close()
-
-#生成code.html文件
-file_codeHtml=open("code.html","w")
-file_codeHtml.write(file_codePy_message)
-print(file_codePy_message)
-file_srsHtml.close()
-
+{see rq5}
+if __name__ == '__main__':
+	{see ra5_main}	
+    ed = lst2dict(file2lst('words.txt')) # from http://greenteapress.com/thinkpython2/code/words.txt
+    d = word_frequency('brexit-news.txt', ed)
+    print(sort_by_value(d))
