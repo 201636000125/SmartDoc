@@ -25,7 +25,7 @@ def see_tc():
 file_srsTxt=open("SRS.txt", "r");
 file_srsTxt_message=''
 for line in file_srsTxt.readlines():
-    file_srsTxt_message=file_srsTxt_message+"<p>"+line+"</p>"
+    file_srsTxt_message=file_srsTxt_message+"</br>"+line
 file_srsTxt.close()
 
 
@@ -48,7 +48,7 @@ file_srsHtml.close()
 file_codePy=open("code.py", "r",encoding="utf-8")
 file_codePy_message=''
 for line in file_codePy.readlines():
-    file_codePy_message=file_codePy_message+"<p>"+line+"</p>"
+    file_codePy_message=file_codePy_message+"</br>"+line
 file_codePy.close()
 
 

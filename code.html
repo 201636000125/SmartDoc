@@ -2,67 +2,67 @@
 <html>
 <head>code</head>
 <body>
-<p># Copyright (C) 2019 Hui Lan
-</p><p>{see rq1}
-</p><p>def file2lst(fname):
-</p><p>    ''' Return a list where each element is a word from fname. '''
-</p><p>    L = []
-</p><p>	{see ra1_open}
-</p><p>    f = open(fname)
-</p><p>    for line in f:
-</p><p>		{see ra1_strip}
-</p><p>        line = line.strip()
-</p><p>		{see ra1_split}
-</p><p>        lst = line.split()
-</p><p>        for x in lst:
-</p><p>			{see ra1_append}
-</p><p>            L.append(x)
-</p><p>	{see ra1_close}
-</p><p>    f.close()
-</p><p>    return L
-</p><p>
-</p><p>{see rq2}
-</p><p>def lst2dict(lst):
-</p><p>    ''' Return a dictionary given list lst.  Each key is an element in the lst.
-</p><p>    The value is always 1.'''
-</p><p>	{see ra2_dictionary}
-</p><p>    d = {}
-</p><p>    for w in lst:
-</p><p>        d[w] = 1 
-</p><p>    return d
-</p><p>
-</p><p>
-</p><p>{see rq3}
-</p><p>def word_frequency(fname, english_dictionary):
-</p><p>    ''' Return a dictionary where each key is a word both in the file fname and in 
-</p><p>    the dictionary english_dictionary, and the corresponding value is the frequency
-</p><p>    of that word.'''
-</p><p>    d = {}
-</p><p>    L = file2lst(fname)
-</p><p>    for x in L:
-</p><p>		{see ra3_lower}
-</p><p>        x = x.lower()
-</p><p>        if x in english_dictionary:
-</p><p>            if not x in d:
-</p><p>                d[x] = 1
-</p><p>            else:
-</p><p>                d[x] += 1
-</p><p>    return d
-</p><p>
-</p><p>{see rq4}
-</p><p>def sort_by_value(d):
-</p><p>    ''' Return a sorted list of tuples, each tuple containing a key and a value.
-</p><p>        Note that the tuples are order in descending order of the value.'''
-</p><p>    import operator
-</p><p>	{see ra4_sort}
-</p><p>    lst = sorted(d.items(), key=operator.itemgetter(1), reverse=True)    
-</p><p>    return lst
-</p><p>
-</p><p>{see rq5}
-</p><p>if __name__ == '__main__':
-</p><p>	{see ra5_main}	
-</p><p>    ed = lst2dict(file2lst('words.txt')) # from http://greenteapress.com/thinkpython2/code/words.txt
-</p><p>    d = word_frequency('brexit-news.txt', ed)
-</p><p>    print(sort_by_value(d))</p>
+</br># Copyright (C) 2019 Hui Lan
+</br>{see rq1}
+</br>def file2lst(fname):
+</br>    ''' Return a list where each element is a word from fname. '''
+</br>    L = []
+</br>	{see ra1_open}
+</br>    f = open(fname)
+</br>    for line in f:
+</br>		{see ra1_strip}
+</br>        line = line.strip()
+</br>		{see ra1_split}
+</br>        lst = line.split()
+</br>        for x in lst:
+</br>			{see ra1_append}
+</br>            L.append(x)
+</br>	{see ra1_close}
+</br>    f.close()
+</br>    return L
+</br>
+</br>{see rq2}
+</br>def lst2dict(lst):
+</br>    ''' Return a dictionary given list lst.  Each key is an element in the lst.
+</br>    The value is always 1.'''
+</br>	{see ra2_dictionary}
+</br>    d = {}
+</br>    for w in lst:
+</br>        d[w] = 1 
+</br>    return d
+</br>
+</br>
+</br>{see rq3}
+</br>def word_frequency(fname, english_dictionary):
+</br>    ''' Return a dictionary where each key is a word both in the file fname and in 
+</br>    the dictionary english_dictionary, and the corresponding value is the frequency
+</br>    of that word.'''
+</br>    d = {}
+</br>    L = file2lst(fname)
+</br>    for x in L:
+</br>		{see ra3_lower}
+</br>        x = x.lower()
+</br>        if x in english_dictionary:
+</br>            if not x in d:
+</br>                d[x] = 1
+</br>            else:
+</br>                d[x] += 1
+</br>    return d
+</br>
+</br>{see rq4}
+</br>def sort_by_value(d):
+</br>    ''' Return a sorted list of tuples, each tuple containing a key and a value.
+</br>        Note that the tuples are order in descending order of the value.'''
+</br>    import operator
+</br>	{see ra4_sort}
+</br>    lst = sorted(d.items(), key=operator.itemgetter(1), reverse=True)    
+</br>    return lst
+</br>
+</br>{see rq5}
+</br>if __name__ == '__main__':
+</br>	{see ra5_main}	
+</br>    ed = lst2dict(file2lst('words.txt')) # from http://greenteapress.com/thinkpython2/code/words.txt
+</br>    d = word_frequency('brexit-news.txt', ed)
+</br>    print(sort_by_value(d))
 </body>
 </html>
