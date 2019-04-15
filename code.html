@@ -19,10 +19,8 @@ file_srsHtml.write(file_srsTxt_message)
 print(file_srsTxt_message)
 file_srsHtml.close()
 
-
-import sys
 #¶ÁÈ¡Scode.pyÎÄ¼þ
-file_codePy=open(sys.argv[0], "r",encoding="utf-8")
+file_codePy=open("code.py", "r",encoding="utf-8")
 file_codePy_message=file_codePy.read()
 file_codePy.close()
 
@@ -31,4 +29,6 @@ file_codeHtml=open("code.html","w")
 file_codeHtml.write(file_codePy_message)
 print(file_codePy_message)
 file_srsHtml.close()
+
+Html.close()
 
