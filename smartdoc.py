@@ -6,8 +6,69 @@ Name :SmartDoc
 
 """
 
+def checkSeeRqSrs(text,htmlName):
+    textLen=len(text)
+    reText=''
+    endflag=-1
+    for i in range(0,textLen):
+        tempText=''
+        for j in range(i,min(i+6,textLen)):
+            tempText+=text[j]
+        if (tempText=='[id=rq'):
+            subText=''
+            for k in range(i+6,textLen):
+                if (text[k]==']'):
+                    endflag=k
+                    break
+                subText+=text[k]
+            reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
+        tempText=''
+        for j in range(i,min(i+8,textLen)):
+            tempText+=text[j]
+        if (tempText=='[id = rq'):
+            subText=''
+            for k in range(i+8,textLen):
+                if (text[k]==']'):
+                    endflag=k
+                    break
+                subText+=text[k]
+            reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
+        if (text[i]=='\n'):
+            reText+='<br/>'
+        elif (text[i]==' '):
+            reText+='&nbsp'
+        else:
+            reText+=text[i]
+        if (i==endflag):
+            reText+='</a>'
+    return reText
 
-"""
+def checkSeeRqCode(text,htmlName):
+    textLen=len(text)
+    reText=''
+    endflag=-1
+    for i in range(0,textLen):
+        tempText=''
+        for j in range(i,min(i+7,textLen)):
+            tempText+=text[j]
+        if (tempText=='{see rq'):
+            subText=''
+            for k in range(i+7,textLen):
+                if (text[k]=='}'):
+                    endflag=k
+                    break
+                subText+=text[k]
+            reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
+        if (text[i]=='\n'):
+            reText+='<br/>'
+        elif (text[i]==' '):
+            reText+='&nbsp'
+        else:
+            reText+=text[i]
+        if (i==endflag):
+            reText+='</a>'
+    return reText
+'''
 def see_rq():
     return 
 
@@ -16,16 +77,14 @@ def see_ral():
 
 def see_tc():
     return 
-"""
+'''
 
 #import webbrowser
 
 
 #读取SRS.txt文件
 file_srsTxt=open("SRS.txt", "r");
-file_srsTxt_message=''
-for line in file_srsTxt.readlines():
-    file_srsTxt_message=file_srsTxt_message+"</br>"+line
+file_srsTxt_message=checkSeeRqSrs(file_srsTxt.read(),'code.html')
 file_srsTxt.close()
 
 
@@ -46,9 +105,7 @@ file_srsHtml.close()
 
 #读取Scode.py文件
 file_codePy=open("code.py", "r",encoding="utf-8")
-file_codePy_message=''
-for line in file_codePy.readlines():
-    file_codePy_message=file_codePy_message+"</br>"+line
+file_codePy_message=checkSeeRqCode(file_codePy.read(),'SRS.html')
 file_codePy.close()
 
 
