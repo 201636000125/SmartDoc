@@ -6,6 +6,23 @@ Name :SmartDoc
 
 """
 
+
+"""
+SRS格式参考样式为：
+
+@Requirement [id=rq1] [description=???]
+Rationale  [id=ra1???] [description=???]
+TestCase   [id=tc???] [description=???]
+Priority   [Low/Medium/High]
+ 
+"""
+
+
+"""
+生成网页和链接
+查找关键字 [id= ？ ] 生成链接
+"""
+
 def checkSeeRqSrs(text,htmlName):
     textLen=len(text)
     reText=''
@@ -14,6 +31,7 @@ def checkSeeRqSrs(text,htmlName):
         tempText=''
         for j in range(i,min(i+4,textLen)):
             tempText+=text[j]
+        #找到关键字前缀
         if (tempText=='[id='):
             subText=''
             for k in range(i+4,textLen):
@@ -21,10 +39,12 @@ def checkSeeRqSrs(text,htmlName):
                     endflag=k
                     break
                 subText+=text[k]
+            #生成链接
             reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
         tempText=''
         for j in range(i,min(i+6,textLen)):
             tempText+=text[j]
+        #考虑关键字间的空格
         if (tempText=='[id = '):
             subText=''
             for k in range(i+6,textLen):
@@ -33,16 +53,22 @@ def checkSeeRqSrs(text,htmlName):
                     break
                 subText+=text[k]
             reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
+        #空格和换行的转换
         if (text[i]=='\n'):
             reText+='<br/>'
         elif (text[i]==' '):
             reText+='&nbsp'
         else:
             reText+=text[i]
+        #链接结束
         if (i==endflag):
             reText+='</a>'
     return reText
 
+"""
+生成网页和链接
+查找关键字 {see ? } 生成链接
+"""
 def checkSeeRqCode(text,htmlName):
     textLen=len(text)
     reText=''
@@ -51,6 +77,7 @@ def checkSeeRqCode(text,htmlName):
         tempText=''
         for j in range(i,min(i+5,textLen)):
             tempText+=text[j]
+        #关键字前缀
         if (tempText=='{see '):
             subText=''
             for k in range(i+5,textLen):
@@ -68,16 +95,6 @@ def checkSeeRqCode(text,htmlName):
         if (i==endflag):
             reText+='</a>'
     return reText
-'''
-def see_rq():
-    return 
-
-def see_ral():
-    return 
-
-def see_tc():
-    return 
-'''
 
 #import webbrowser
 
