@@ -12,22 +12,22 @@ def checkSeeRqSrs(text,htmlName):
     endflag=-1
     for i in range(0,textLen):
         tempText=''
-        for j in range(i,min(i+6,textLen)):
+        for j in range(i,min(i+4,textLen)):
             tempText+=text[j]
-        if (tempText=='[id=rq'):
+        if (tempText=='[id='):
             subText=''
-            for k in range(i+6,textLen):
+            for k in range(i+4,textLen):
                 if (text[k]==']'):
                     endflag=k
                     break
                 subText+=text[k]
             reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
         tempText=''
-        for j in range(i,min(i+8,textLen)):
+        for j in range(i,min(i+6,textLen)):
             tempText+=text[j]
-        if (tempText=='[id = rq'):
+        if (tempText=='[id = '):
             subText=''
-            for k in range(i+8,textLen):
+            for k in range(i+6,textLen):
                 if (text[k]==']'):
                     endflag=k
                     break
@@ -49,11 +49,11 @@ def checkSeeRqCode(text,htmlName):
     endflag=-1
     for i in range(0,textLen):
         tempText=''
-        for j in range(i,min(i+7,textLen)):
+        for j in range(i,min(i+5,textLen)):
             tempText+=text[j]
-        if (tempText=='{see rq'):
+        if (tempText=='{see '):
             subText=''
-            for k in range(i+7,textLen):
+            for k in range(i+5,textLen):
                 if (text[k]=='}'):
                     endflag=k
                     break
