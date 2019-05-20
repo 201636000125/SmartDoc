@@ -6,7 +6,6 @@ Name :SmartDoc
 
 """
 
-
 """
 SRS格式参考样式为：
 
@@ -14,78 +13,129 @@ SRS格式参考样式为：
 Rationale  [id=ra1???] [description=???]
 TestCase   [id=tc???] [description=???]
 Priority   [Low/Medium/High]
+
+"""
+#全局变量，list_rq读取srs.txt，list_ra读取code.py
+#清空list_rq,list_ra
+list_rq=[]
+list_ra=[]
+
+"""
+Traceability Matrix
+
+def
+
+
  
 """
 
-
 """
 生成网页和链接
-查找关键字 [id= ？ ] 生成链接
+查找关键字 @Requirement [id=?] 生成链接
 """
-
 def checkSeeRqSrs(text,htmlName):
-    textLen=len(text)
+    text_len=len(text)
     reText=''
     endflag=-1
-    for i in range(0,textLen):
-        tempText=''
-        for j in range(i,min(i+4,textLen)):
-            tempText+=text[j]
-        #找到关键字前缀
-        if (tempText=='[id='):
-            subText=''
-            for k in range(i+4,textLen):
-                if (text[k]==']'):
-                    endflag=k
-                    break
-                subText+=text[k]
-            #生成链接
-            reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
-        tempText=''
-        for j in range(i,min(i+6,textLen)):
-            tempText+=text[j]
-        #考虑关键字间的空格
-        if (tempText=='[id = '):
-            subText=''
-            for k in range(i+6,textLen):
-                if (text[k]==']'):
-                    endflag=k
-                    break
-                subText+=text[k]
-            reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
-        #空格和换行的转换
+
+    alph=''
+    for i in range(0,text_len):
+        if (text[i]!=' ' and text[i]!='\n'):
+            alph+=text[i]
+    alph_len=len(alph)
+    #print(alph)
+    alph_pos=-1
+    first_alph=' '
+    for i in range(0,text_len):
+        if (text[i]!=' ' and text[i]!='\n'):
+            alph_pos+=1
+        if (text[i]=='['):
+            sub_alph=''
+            for j in range(max(0,alph_pos-12),min(alph_len,alph_pos+4)):
+                sub_alph+=alph[j]
+            if (sub_alph=='@Requirement[id='):
+                add_rq=''
+                add_be=min(alph_len,alph_pos+4)
+                for j in range(i,text_len):
+                    if (text[j]==alph[add_be]):
+                        if (text[j]==']'):
+                            endflag=j
+                            break
+                        add_rq+=text[j]
+                        add_be+=1
+                if (add_be>min(alph_len,alph_pos+4)):
+                    list_rq.append(add_rq)
+                    reText+='<a name=\"'+add_rq+'\" href=\"'+htmlName+'#'+add_rq+'\">'
+            
+            sub_alph=''
+            for j in range(max(0,alph_pos-9),min(alph_len,alph_pos+4)):
+                sub_alph+=alph[j]
+            if (sub_alph=='Rationale[id='):
+                add_rq=''
+                add_be=min(alph_len,alph_pos+4)
+                for j in range(i,text_len):
+                    if (text[j]==alph[add_be]):
+                        if (text[j]==']'):
+                            endflag=j
+                            break
+                        add_rq+=text[j]
+                        add_be+=1
+                if (add_be>min(alph_len,alph_pos+4)):
+                    list_rq.append(add_rq)
+                    reText+='<a name=\"'+add_rq+'\" href=\"'+htmlName+'#'+add_rq+'\">'
+
+
         if (text[i]=='\n'):
             reText+='<br/>'
         elif (text[i]==' '):
             reText+='&nbsp'
         else:
             reText+=text[i]
-        #链接结束
         if (i==endflag):
             reText+='</a>'
     return reText
+
 
 """
 生成网页和链接
 查找关键字 {see ? } 生成链接
 """
 def checkSeeRqCode(text,htmlName):
-    textLen=len(text)
+    text_len=len(text)
     reText=''
     endflag=-1
-    for i in range(0,textLen):
-        tempText=''
-        for j in range(i,min(i+5,textLen)):
-            tempText+=text[j]
-        #关键字前缀
-        if (tempText=='{see '):
-            subText=''
-            for k in range(i+5,textLen):
-                if (text[k]=='}'):
-                    endflag=k
-                    break
-                subText+=text[k]
-            reText+='<a name=\"'+subText+'\" href=\"'+htmlName+'#'+subText+'\">'
+
+    alph=''
+    for i in range(0,text_len):
+        if (text[i]!=' ' and text[i]!='\n'):
+            alph+=text[i]
+    alph_len=len(alph)
+    #print(alph)
+    alph_pos=-1
+    for i in range(0,text_len):
+        if (text[i]!=' ' and text[i]!='\n'):
+            alph_pos+=1
+        if (text[i]=='{'):
+            sub_alph=''
+            for j in range(alph_pos,min(alph_len,alph_pos+4)):
+                sub_alph+=alph[j]
+            #print(sub_alph)
+            #print('---\n')
+            if (sub_alph=='{see'):
+                add_ra=''
+                add_be=min(alph_len,alph_pos+4)
+                for j in range(i,text_len):
+                    if (text[j]==alph[add_be]):
+                        if (text[j]=='}'):
+                            endflag=j
+                            break
+                        add_ra+=text[j]
+                        add_be+=1
+                if (add_be>min(alph_len,alph_pos+4)):
+                    list_ra.append(add_ra)
+                    reText+='<a name=\"'+add_ra+'\" href=\"'+htmlName+'#'+add_ra+'\">'
+
+
         if (text[i]=='\n'):
             reText+='<br/>'
         elif (text[i]==' '):
@@ -95,6 +145,8 @@ def checkSeeRqCode(text,htmlName):
         if (i==endflag):
             reText+='</a>'
     return reText
+
+
 
 #import webbrowser
 
@@ -103,7 +155,6 @@ def checkSeeRqCode(text,htmlName):
 file_srsTxt=open("SRS.txt", "r");
 file_srsTxt_message=checkSeeRqSrs(file_srsTxt.read(),'code.html')
 file_srsTxt.close()
-
 
 #生成SRS.html文件
 file_srsHtml=open("SRS.html","w")
@@ -119,12 +170,10 @@ file_srsHtml.write(file_srsHtml_message)
 #print(file_srsHtml_message)
 file_srsHtml.close()
 
-
 #读取Scode.py文件
 file_codePy=open("code.py", "r",encoding="utf-8")
 file_codePy_message=checkSeeRqCode(file_codePy.read(),'SRS.html')
 file_codePy.close()
-
 
 #生成code.html文件
 file_codeHtml=open("code.html","w")
