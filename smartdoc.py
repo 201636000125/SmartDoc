@@ -21,6 +21,8 @@ list_py_rq=[]
 list_srs_rq=[]
 list_srs_ra=[]
 list_srs_t=[]
+list_srs_ra_rq=[]
+list_srs_t_rq=[]
 """
 Traceability Matrix
 
@@ -83,6 +85,10 @@ def checkSeeRqSrs(text,htmlName):
                         add_be+=1
                 if (add_be>min(alph_len,alph_pos+4)):
                     list_srs_ra.append(add_ra)
+                    if (list_srs_rq):
+                        list_srs_ra_rq.append(list_srs_rq[-1])
+                    else:
+                        list_srs_ra_rq.append('')
                     
             sub_alph=''
             for j in range(max(0,alph_pos-8),min(alph_len,alph_pos+4)):
@@ -99,6 +105,10 @@ def checkSeeRqSrs(text,htmlName):
                         add_be+=1
                 if (add_be>min(alph_len,alph_pos+4)):
                     list_srs_t.append(add_t)
+                    if (list_srs_rq):
+                        list_srs_t_rq.append(list_srs_rq[-1])
+                    else:
+                        list_srs_t_rq.append('')
 
         if (text[i]=='\n'):
             reText+='<br/>'
@@ -172,7 +182,7 @@ def makeRTM():
     
     #rq-rq
     column=len(list_srs_rq)
-    print(column)
+    #print(column)
     reText+='<p><table border=\"1\" cellspacing=\"0\" >'
     for i in range(0,row+1):
         reText+='<tr>'
@@ -183,7 +193,7 @@ def makeRTM():
             elif (j==0 and i>0):
                 reText+=('RQ'+str(i)+': '+list_py_rq[i-1])
             elif (i>0 and j>0 and list_py_rq[i-1]==list_srs_rq[j-1]):
-                reText+=''
+                reText+='<img src="arrow.png" width="15" height="15" /> '
             reText+='</td>'
         reText+='</tr>'
     reText+='</table></p>'
@@ -199,8 +209,8 @@ def makeRTM():
                 reText+=('RA'+str(j)+': '+list_srs_ra[j-1])
             elif (j==0 and i>0):
                 reText+=('RQ'+str(i)+': '+list_py_rq[i-1])
-            elif (i>0 and j>0 and list_py_rq[i-1]==list_srs_ra[j-1]):
-                reText+=''
+            elif (i>0 and j>0 and list_py_rq[i-1]==list_srs_ra_rq[j-1]):
+                reText+='<img src="arrow.png" width="15" height="15" /> '
             reText+='</td>'
         reText+='</tr>'
     reText+='</table></p>'
@@ -216,8 +226,8 @@ def makeRTM():
                 reText+=('T'+str(j)+': '+list_srs_t[j-1])
             elif (j==0 and i>0):
                 reText+=('RQ'+str(i)+': '+list_py_rq[i-1])
-            elif (i>0 and j>0 and list_py_rq[i-1]==list_srs_t[j-1]):
-                reText+=''
+            elif (i>0 and j>0 and list_py_rq[i-1]==list_srs_t_rq[j-1]):
+                reText+='<img src="arrow.png" width="15" height="15" /> '
             reText+='</td>'
         reText+='</tr>'
     reText+='</table></p>'
@@ -231,7 +241,7 @@ def makeRTM():
 
 
 #读取SRS.txt文件
-file_srsTxt=open("SRS.txt", "r");
+file_srsTxt=open("SRS.txt", "r")
 file_srsTxt_message=checkSeeRqSrs(file_srsTxt.read(),'code.html')
 file_srsTxt.close()
 

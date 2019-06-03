@@ -1,2 +1,2 @@
 # SmartDoc
-It is a homework
+It is a homework.
